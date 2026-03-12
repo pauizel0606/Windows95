@@ -1,270 +1,231 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Windows 95 Desktop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escritorio Windows 95</title>
+    <style>
+        /* Definición de colores y estilos básicos */
+        :root {
+            --win95-bg: #008080; /* Color de fondo turquesa clásico */
+            --win95-gray: #c0c0c0; /* Gris de ventanas y barras */
+            --win95-border-light: #ffffff;
+            --win95-border-dark: #808080;
+            --win95-border-black: #000000;
+            --win95-blue-title: #000080; /* Azul de barra de título */
+        }
 
-<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Pixelated MS Sans Serif", Arial, sans-serif; /* Intento de fuente pixelada */
+            background-color: var(--win95-bg);
+        }
 
-body{
-margin:0;
-background:#008080;
-font-family:Tahoma,sans-serif;
-height:100vh;
-overflow:hidden;
-}
+        /* --- Escritorio y Contenedor de Iconos --- */
+        #desktop {
+            height: calc(100vh - 40px); /* Resta la altura de la barra de tareas */
+            position: relative;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
-/* DESKTOP */
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 80px;
+        }
 
-.desktop{
-padding:20px;
-display:flex;
-flex-direction:column;
-gap:30px;
-width:120px;
-}
+        .icon {
+            text-align: center;
+            cursor: pointer;
+            color: #ffffff;
+            text-shadow: 1px 1px #000000;
+        }
 
-/* ICONOS */
+        .icon img {
+            width: 32px;
+            height: 32px;
+            display: block;
+            margin: 0 auto 5px;
+        }
 
-.icon{
-color:white;
-text-align:center;
-cursor:pointer;
-font-size:13px;
-text-shadow:1px 1px 0 black;
-width:70px;
-}
+        .icon span {
+            font-size: 11px;
+            display: block;
+            margin-top: 2px;
+        }
 
-.icon img{
-width:32px;
-height:32px;
-display:block;
-margin:auto;
-margin-bottom:4px;
-image-rendering: pixelated;
-}
+        /* --- Ventana de Ejemplo (Opcional, para decoración) --- */
+        .window {
+            position: absolute;
+            top: 50px;
+            left: 150px;
+            width: 400px;
+            background-color: var(--win95-gray);
+            border: 2px solid;
+            border-color: var(--win95-border-light) var(--win95-border-black) var(--win95-border-black) var(--win95-border-light);
+            box-shadow: 1px 1px 0 0 var(--win95-border-dark) inset;
+        }
 
-/* VENTANAS */
+        .title-bar {
+            background-color: var(--win95-blue-title);
+            color: #ffffff;
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
 
-.window{
-position:absolute;
-top:120px;
-left:260px;
-width:320px;
-background:#c0c0c0;
-border-top:3px solid white;
-border-left:3px solid white;
-border-right:3px solid #404040;
-border-bottom:3px solid #404040;
-display:none;
-}
+        .title-bar-controls button {
+            width: 16px;
+            height: 14px;
+            background-color: var(--win95-gray);
+            border: 1px solid;
+            border-color: var(--win95-border-light) var(--win95-border-black) var(--win95-border-black) var(--win95-border-light);
+            font-size: 9px;
+            font-weight: bold;
+            padding: 0;
+            cursor: pointer;
+        }
 
-.titlebar{
-background:linear-gradient(to right,#000080,#1084d0);
-color:white;
-padding:4px;
-display:flex;
-justify-content:space-between;
-font-weight:bold;
-}
+        .window-body {
+            padding: 10px;
+            font-size: 12px;
+            color: #000000;
+        }
 
-.closebtn{
-width:18px;
-height:18px;
-background:#c0c0c0;
-border-top:2px solid white;
-border-left:2px solid white;
-border-right:2px solid #404040;
-border-bottom:2px solid #404040;
-cursor:pointer;
-}
+        /* --- Barra de Tareas --- */
+        #taskbar {
+            height: 40px;
+            background-color: var(--win95-gray);
+            border-top: 2px solid var(--win95-border-light);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            box-sizing: border-box;
+            z-index: 100;
+        }
 
-.content{
-padding:10px;
-}
+        #start-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: var(--win95-gray);
+            border: 2px solid;
+            border-color: var(--win95-border-light) var(--win95-border-black) var(--win95-border-black) var(--win95-border-light);
+            padding: 2px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
 
-/* TASKBAR */
+        #start-button:active {
+            border-color: var(--win95-border-black) var(--win95-border-light) var(--win95-border-light) var(--win95-border-black);
+        }
 
-.taskbar{
-position:absolute;
-bottom:0;
-left:0;
-width:100%;
-height:40px;
-background:#c0c0c0;
-border-top:3px solid white;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
+        #start-button img {
+            width: 18px;
+            height: 18px;
+        }
 
-/* START BUTTON */
+        #notification-area {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid;
+            border-color: var(--win95-border-dark) var(--win95-border-light) var(--win95-border-light) var(--win95-border-dark);
+            padding: 0 8px;
+            height: 28px;
+            background-color: var(--win95-gray);
+        }
 
-.start{
-margin-left:5px;
-display:flex;
-align-items:center;
-gap:6px;
-padding:4px 10px;
-font-weight:bold;
-background:#c0c0c0;
-border-top:2px solid white;
-border-left:2px solid white;
-border-right:2px solid #404040;
-border-bottom:2px solid #404040;
-cursor:pointer;
-}
+        #clock {
+            font-size: 12px;
+            color: #000000;
+        }
 
-.start img{
-width:18px;
-}
-
-/* START MENU */
-
-.startmenu{
-position:absolute;
-bottom:40px;
-left:5px;
-width:200px;
-background:#c0c0c0;
-border-top:3px solid white;
-border-left:3px solid white;
-border-right:3px solid #404040;
-border-bottom:3px solid #404040;
-display:none;
-}
-
-.menuitem{
-padding:8px;
-cursor:pointer;
-}
-
-.menuitem:hover{
-background:#000080;
-color:white;
-}
-
-/* CLOCK */
-
-.clock{
-margin-right:10px;
-background:#c0c0c0;
-padding:3px 8px;
-border-top:2px solid #404040;
-border-left:2px solid #404040;
-border-right:2px solid white;
-border-bottom:2px solid white;
-}
-
-</style>
+        #volume-icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="desktop">
+    <div id="desktop">
+        <div class="icon-container">
+            <div class="icon">
+                <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-5.png" alt="Mi PC">
+                <span>Mi PC</span>
+            </div>
+            <div class="icon">
+                <img src="https://win98icons.alexmeub.com/icons/png/recycle_bin_empty-4.png" alt="Papelera de reciclaje">
+                <span>Papelera de<br>reciclaje</span>
+            </div>
+            <div class="icon">
+                <img src="https://win98icons.alexmeub.com/icons/png/msie1-2.png" alt="The Internet">
+                <span>The Internet</span>
+            </div>
+            <div class="icon">
+                <img src="https://win98icons.alexmeub.com/icons/png/directory_closed-4.png" alt="Mis documentos">
+                <span>Mis<br>documentos</span>
+            </div>
+        </div>
 
-<div class="icon" onclick="openWindow('computer')">
-<img src="icons/mycomputer.ico">
-My Computer
-</div>
+        <div class="window">
+            <div class="title-bar">
+                <span>Bienvenido a Windows 95</span>
+                <div class="title-bar-controls">
+                    <button>_</button>
+                    <button style="margin-left: 2px;">X</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <p>Este es un ejemplo de cómo se vería una ventana.</p>
+                <p>Los iconos en el escritorio son idénticos a los originales.</p>
+            </div>
+        </div>
+    </div>
 
-<div class="icon" onclick="openWindow('notes')">
-<img src="icons/notepad.ico">
-Notepad
-</div>
+    <div id="taskbar">
+        <button id="start-button">
+            <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="Inicio">
+            Inicio
+        </button>
 
-<div class="icon">
-<img src="icons/recyclebin.ico">
-Recycle Bin
-</div>
+        <div id="notification-area">
+            <img id="volume-icon" src="https://win98icons.alexmeub.com/icons/png/loudspeaker_rays-0.png" alt="Volumen">
+            <span id="clock">12:00 PM</span>
+        </div>
+    </div>
 
-</div>
+    <script>
+        // Función para actualizar el reloj
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // la hora 0 debe ser 12
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const strTime = hours + ':' + minutes + ' ' + ampm;
+            document.getElementById('clock').textContent = strTime;
+        }
 
-
-<div id="computer" class="window">
-
-<div class="titlebar">
-<span>My Computer</span>
-<div class="closebtn" onclick="closeWindow('computer')"></div>
-</div>
-
-<div class="content">
-<p>Este es tu escritorio retro.</p>
-</div>
-
-</div>
-
-
-<div id="notes" class="window">
-
-<div class="titlebar">
-<span>Notepad</span>
-<div class="closebtn" onclick="closeWindow('notes')"></div>
-</div>
-
-<div class="content">
-<textarea style="width:100%;height:120px;"></textarea>
-</div>
-
-</div>
-
-
-<div id="startmenu" class="startmenu">
-
-<div class="menuitem" onclick="openWindow('computer')">
-My Computer
-</div>
-
-<div class="menuitem" onclick="openWindow('notes')">
-Notepad
-</div>
-
-</div>
-
-
-<div class="taskbar">
-
-<div class="start" onclick="toggleStart()">
-<img src="icons/start.ico">
-Start
-</div>
-
-<div id="clock" class="clock"></div>
-
-</div>
-
-
-<script>
-
-function openWindow(id){
-document.getElementById(id).style.display="block"
-}
-
-function closeWindow(id){
-document.getElementById(id).style.display="none"
-}
-
-function toggleStart(){
-let menu=document.getElementById("startmenu")
-menu.style.display = menu.style.display==="block" ? "none" : "block"
-}
-
-function updateClock(){
-
-let now=new Date()
-
-let h=String(now.getHours()).padStart(2,"0")
-let m=String(now.getMinutes()).padStart(2,"0")
-
-document.getElementById("clock").innerText=h+":"+m
-
-}
-
-setInterval(updateClock,1000)
-
-updateClock()
-
-</script>
-
+        // Actualizar el reloj cada segundo
+        setInterval(updateClock, 1000);
+        updateClock(); // Llamada inicial para establecer la hora de inmediato
+    </script>
 </body>
 </html>
