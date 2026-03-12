@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Retro Desktop</title>
+
+<style>
+
+body{
+margin:0;
+background:#008080;
+font-family:Tahoma,sans-serif;
+height:100vh;
+overflow:hidden;
+}
+
+/* ICONOS */
+
+.desktop{
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:20px;
+width:120px;
+}
+
+.icon{
+color:white;
+text-align:center;
+cursor:pointer;
+}
+
+.icon img{
+width:40px;
+display:block;
+margin:auto;
+}
+
+/* VENTANAS */
+
+.window{
+position:absolute;
+top:120px;
+left:200px;
+width:300px;
+background:#c0c0c0;
+border-top:3px solid white;
+border-left:3px solid white;
+border-right:3px solid #404040;
+border-bottom:3px solid #404040;
+display:none;
+}
+
+.titlebar{
+background:linear-gradient(to right,#000080,#1084d0);
+color:white;
+padding:5px;
+display:flex;
+justify-content:space-between;
+}
+
+.content{
+padding:15px;
+}
+
+/* BOTONES */
+
+button{
+background:#c0c0c0;
+border-top:2px solid white;
+border-left:2px solid white;
+border-right:2px solid #404040;
+border-bottom:2px solid #404040;
+padding:5px 10px;
+cursor:pointer;
+}
+
+/* BARRA DE TAREAS */
+
+.taskbar{
+position:absolute;
+bottom:0;
+width:100%;
+height:40px;
+background:#c0c0c0;
+border-top:3px solid white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.start{
+margin-left:5px;
+}
+
+.clock{
+margin-right:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="desktop">
+
+<div class="icon" onclick="openWindow('notes')">
+📄
+<div>Notes</div>
+</div>
+
+<div class="icon" onclick="openWindow('about')">
+💻
+<div>About</div>
+</div>
+
+</div>
+
+
+<!-- WINDOW NOTES -->
+
+<div id="notes" class="window">
+
+<div class="titlebar">
+Notes
+<button onclick="closeWindow('notes')">X</button>
+</div>
+
+<div class="content">
+
+<textarea style="width:100%;height:120px;"></textarea>
+
+</div>
+
+</div>
+
+
+<!-- WINDOW ABOUT -->
+
+<div id="about" class="window">
+
+<div class="titlebar">
+About
+<button onclick="closeWindow('about')">X</button>
+</div>
+
+<div class="content">
+
+<h3>Retro Desktop</h3>
+<p>Mini escritorio estilo Windows 95.</p>
+
+</div>
+
+</div>
+
+
+<!-- TASKBAR -->
+
+<div class="taskbar">
+
+<button class="start">Start</button>
+
+<div id="clock" class="clock"></div>
+
+</div>
+
+
+<script>
+
+function openWindow(id){
+document.getElementById(id).style.display="block"
+}
+
+function closeWindow(id){
+document.getElementById(id).style.display="none"
+}
+
+/* CLOCK */
+
+function updateClock(){
+
+let now = new Date()
+
+let h = String(now.getHours()).padStart(2,"0")
+let m = String(now.getMinutes()).padStart(2,"0")
+
+document.getElementById("clock").innerText = h+":"+m
+
+}
+
+setInterval(updateClock,1000)
+
+updateClock()
+
+</script>
+
+</body>
+</html>
