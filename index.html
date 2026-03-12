@@ -9,7 +9,7 @@
 body{
 margin:0;
 background:#008080;
-font-family:Tahoma, sans-serif;
+font-family:Tahoma,sans-serif;
 height:100vh;
 overflow:hidden;
 }
@@ -30,9 +30,9 @@ width:120px;
 color:white;
 text-align:center;
 cursor:pointer;
-width:70px;
 font-size:13px;
-text-shadow:1px 1px 0 #000;
+text-shadow:1px 1px 0 black;
+width:70px;
 }
 
 .icon img{
@@ -40,7 +40,8 @@ width:32px;
 height:32px;
 display:block;
 margin:auto;
-margin-bottom:5px;
+margin-bottom:4px;
+image-rendering: pixelated;
 }
 
 /* VENTANAS */
@@ -64,7 +65,6 @@ color:white;
 padding:4px;
 display:flex;
 justify-content:space-between;
-align-items:center;
 font-weight:bold;
 }
 
@@ -78,8 +78,6 @@ border-right:2px solid #404040;
 border-bottom:2px solid #404040;
 cursor:pointer;
 }
-
-/* CONTENIDO */
 
 .content{
 padding:10px;
@@ -118,7 +116,7 @@ cursor:pointer;
 }
 
 .start img{
-width:20px;
+width:18px;
 }
 
 /* START MENU */
@@ -166,24 +164,22 @@ border-bottom:2px solid white;
 <div class="desktop">
 
 <div class="icon" onclick="openWindow('computer')">
-<img src="https://cdn.jsdelivr.net/gh/win98icons/win98icons/icons/png/computer_explorer-0.png">
+<img src="icons/mycomputer.ico">
 My Computer
 </div>
 
 <div class="icon" onclick="openWindow('notes')">
-<img src="https://cdn.jsdelivr.net/gh/win98icons/win98icons/icons/png/notepad-0.png">
+<img src="icons/notepad.ico">
 Notepad
 </div>
 
-<div class="icon" onclick="openWindow('info')">
-<img src="https://cdn.jsdelivr.net/gh/win98icons/win98icons/icons/png/help_book_big-0.png">
-About
+<div class="icon">
+<img src="icons/recyclebin.ico">
+Recycle Bin
 </div>
 
 </div>
 
-
-<!-- WINDOW COMPUTER -->
 
 <div id="computer" class="window">
 
@@ -193,13 +189,11 @@ About
 </div>
 
 <div class="content">
-<p>Bienvenido a tu escritorio retro.</p>
+<p>Este es tu escritorio retro.</p>
 </div>
 
 </div>
 
-
-<!-- WINDOW NOTES -->
 
 <div id="notes" class="window">
 
@@ -215,25 +209,6 @@ About
 </div>
 
 
-<!-- WINDOW INFO -->
-
-<div id="info" class="window">
-
-<div class="titlebar">
-<span>About</span>
-<div class="closebtn" onclick="closeWindow('info')"></div>
-</div>
-
-<div class="content">
-<h3>Retro Desktop</h3>
-<p>Mini escritorio inspirado en Windows 95.</p>
-</div>
-
-</div>
-
-
-<!-- START MENU -->
-
 <div id="startmenu" class="startmenu">
 
 <div class="menuitem" onclick="openWindow('computer')">
@@ -244,19 +219,13 @@ My Computer
 Notepad
 </div>
 
-<div class="menuitem" onclick="openWindow('info')">
-About
 </div>
 
-</div>
-
-
-<!-- TASKBAR -->
 
 <div class="taskbar">
 
 <div class="start" onclick="toggleStart()">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_1995.svg">
+<img src="icons/start.ico">
 Start
 </div>
 
@@ -276,18 +245,9 @@ document.getElementById(id).style.display="none"
 }
 
 function toggleStart(){
-
 let menu=document.getElementById("startmenu")
-
-if(menu.style.display==="block"){
-menu.style.display="none"
-}else{
-menu.style.display="block"
+menu.style.display = menu.style.display==="block" ? "none" : "block"
 }
-
-}
-
-/* CLOCK */
 
 function updateClock(){
 
