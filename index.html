@@ -2,38 +2,43 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Retro Desktop</title>
+<title>Windows95 Desktop</title>
 
 <style>
 
 body{
 margin:0;
 background:#008080;
-font-family:Tahoma,sans-serif;
+font-family:Tahoma, sans-serif;
 height:100vh;
 overflow:hidden;
 }
 
-/* ICONOS */
+/* DESKTOP */
 
 .desktop{
 padding:20px;
 display:flex;
 flex-direction:column;
-gap:20px;
+gap:25px;
 width:120px;
 }
+
+/* ICONOS */
 
 .icon{
 color:white;
 text-align:center;
 cursor:pointer;
+font-size:14px;
 }
 
 .icon img{
 width:40px;
+height:40px;
 display:block;
 margin:auto;
+margin-bottom:5px;
 }
 
 /* VENTANAS */
@@ -41,8 +46,8 @@ margin:auto;
 .window{
 position:absolute;
 top:120px;
-left:200px;
-width:300px;
+left:250px;
+width:320px;
 background:#c0c0c0;
 border-top:3px solid white;
 border-left:3px solid white;
@@ -54,13 +59,99 @@ display:none;
 .titlebar{
 background:linear-gradient(to right,#000080,#1084d0);
 color:white;
-padding:5px;
+padding:4px;
 display:flex;
 justify-content:space-between;
+align-items:center;
+font-weight:bold;
+}
+
+.closebtn{
+background:#c0c0c0;
+border-top:2px solid white;
+border-left:2px solid white;
+border-right:2px solid #404040;
+border-bottom:2px solid #404040;
+width:18px;
+height:18px;
+cursor:pointer;
 }
 
 .content{
-padding:15px;
+padding:10px;
+}
+
+/* TASKBAR */
+
+.taskbar{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:40px;
+background:#c0c0c0;
+border-top:3px solid white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+/* START BUTTON */
+
+.start{
+margin-left:5px;
+padding:4px 10px;
+font-weight:bold;
+display:flex;
+align-items:center;
+gap:5px;
+background:#c0c0c0;
+border-top:2px solid white;
+border-left:2px solid white;
+border-right:2px solid #404040;
+border-bottom:2px solid #404040;
+cursor:pointer;
+}
+
+.start img{
+width:18px;
+}
+
+/* START MENU */
+
+.startmenu{
+position:absolute;
+bottom:40px;
+left:5px;
+width:200px;
+background:#c0c0c0;
+border-top:3px solid white;
+border-left:3px solid white;
+border-right:3px solid #404040;
+border-bottom:3px solid #404040;
+display:none;
+}
+
+.menuitem{
+padding:8px;
+cursor:pointer;
+}
+
+.menuitem:hover{
+background:#000080;
+color:white;
+}
+
+/* CLOCK */
+
+.clock{
+margin-right:10px;
+background:#c0c0c0;
+padding:3px 8px;
+border-top:2px solid #404040;
+border-left:2px solid #404040;
+border-right:2px solid white;
+border-bottom:2px solid white;
 }
 
 /* BOTONES */
@@ -71,30 +162,8 @@ border-top:2px solid white;
 border-left:2px solid white;
 border-right:2px solid #404040;
 border-bottom:2px solid #404040;
-padding:5px 10px;
 cursor:pointer;
-}
-
-/* BARRA DE TAREAS */
-
-.taskbar{
-position:absolute;
-bottom:0;
-width:100%;
-height:40px;
-background:#c0c0c0;
-border-top:3px solid white;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-.start{
-margin-left:5px;
-}
-
-.clock{
-margin-right:10px;
+padding:4px 10px;
 }
 
 </style>
@@ -105,13 +174,13 @@ margin-right:10px;
 <div class="desktop">
 
 <div class="icon" onclick="openWindow('notes')">
-📄
-<div>Notes</div>
+<img src="https://cdn-icons-png.flaticon.com/512/2991/2991108.png">
+Notes
 </div>
 
 <div class="icon" onclick="openWindow('about')">
-💻
-<div>About</div>
+<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png">
+My Computer
 </div>
 
 </div>
@@ -122,8 +191,8 @@ margin-right:10px;
 <div id="notes" class="window">
 
 <div class="titlebar">
-Notes
-<button onclick="closeWindow('notes')">X</button>
+<span>Notes</span>
+<div class="closebtn" onclick="closeWindow('notes')"></div>
 </div>
 
 <div class="content">
@@ -140,15 +209,30 @@ Notes
 <div id="about" class="window">
 
 <div class="titlebar">
-About
-<button onclick="closeWindow('about')">X</button>
+<span>My Computer</span>
+<div class="closebtn" onclick="closeWindow('about')"></div>
 </div>
 
 <div class="content">
 
 <h3>Retro Desktop</h3>
-<p>Mini escritorio estilo Windows 95.</p>
+<p>Mini escritorio inspirado en Windows 95.</p>
 
+</div>
+
+</div>
+
+
+<!-- START MENU -->
+
+<div id="startmenu" class="startmenu">
+
+<div class="menuitem" onclick="openWindow('notes')">
+Notes
+</div>
+
+<div class="menuitem" onclick="openWindow('about')">
+My Computer
 </div>
 
 </div>
@@ -158,7 +242,10 @@ About
 
 <div class="taskbar">
 
-<button class="start">Start</button>
+<div class="start" onclick="toggleStart()">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Windows_logo_-_1995.svg">
+Start
+</div>
 
 <div id="clock" class="clock"></div>
 
@@ -166,6 +253,8 @@ About
 
 
 <script>
+
+/* WINDOWS */
 
 function openWindow(id){
 document.getElementById(id).style.display="block"
@@ -175,16 +264,30 @@ function closeWindow(id){
 document.getElementById(id).style.display="none"
 }
 
+/* START MENU */
+
+function toggleStart(){
+
+let menu=document.getElementById("startmenu")
+
+if(menu.style.display==="block"){
+menu.style.display="none"
+}else{
+menu.style.display="block"
+}
+
+}
+
 /* CLOCK */
 
 function updateClock(){
 
-let now = new Date()
+let now=new Date()
 
-let h = String(now.getHours()).padStart(2,"0")
-let m = String(now.getMinutes()).padStart(2,"0")
+let h=String(now.getHours()).padStart(2,"0")
+let m=String(now.getMinutes()).padStart(2,"0")
 
-document.getElementById("clock").innerText = h+":"+m
+document.getElementById("clock").innerText=h+":"+m
 
 }
 
